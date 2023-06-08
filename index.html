@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>
+            Three.js Crash Course
+        </title>
+    </head>
+
+    <style>
+        body{ margin: 0;}
+        canvas{ width: 100%; height: 100%;};
+    </style>
+
+    <body>
+        <script src="js/three.js"></script>
+        <!-- <script src="js/main.js"></script> -->
+        <!-- <script src="js/specmap.js"></script> -->
+        <!-- <script src="js/data3d.js"></script> -->
+        <!-- <script src="js/alphamap.js"></script> -->
+        <script src="js/emissive.js"></script>
+        
+    </body>
+    
+
+    <script>
+        
+        
+       // Mouse drag rotation variables
+        let isDragging = false;
+        let previousMousePosition = {
+            x: 0,
+            y: 0
+        };
+
+        // Event listeners
+        renderer.domElement.addEventListener('mousedown', onMouseDown);
+        renderer.domElement.addEventListener('mousemove', onMouseMove);
+        renderer.domElement.addEventListener('mouseup', onMouseUp);
+
+        // Functions for mouse events
+        function onMouseDown(event) {
+        isDragging = true;
+        previousMousePosition = {
+            x: event.clientX,
+            y: event.clientY
+        };
+        }
+
+        function onMouseMove(event) {
+        if (isDragging) {
+            const deltaMove = {
+                x: event.clientX - previousMousePosition.x,
+                y: event.clientY - previousMousePosition.y
+            };
+
+            cube.rotation.y += toRadians(deltaMove.x * 0.5);
+            cube.rotation.x += toRadians(deltaMove.y * 0.5);
+
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+        }
+        }
+
+        function onMouseUp() {
+            isDragging = false;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+	        cube.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        }
+
+        function toRadians(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+
+        animate();
+
+            
+    </script>
+</html>
